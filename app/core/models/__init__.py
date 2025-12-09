@@ -1,1 +1,0 @@
-from app.core.models.processed_images_model import ProcessedImagesModel

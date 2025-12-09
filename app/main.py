@@ -12,7 +12,6 @@ if __name__ == "__main__":
         app="main:app",
         host="0.0.0.0",
         port=8000,
-        workers=4,
         log_level="info",
         reload=settings.SERVER_RELOAD == 1,
     )

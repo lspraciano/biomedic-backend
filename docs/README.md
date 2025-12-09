@@ -161,10 +161,9 @@ rodar o projeto em sua máquina.
 
 Antes de iniciar, verifique se você atende aos seguintes pré-requisitos:
 
-- Python 3.11.2 ou superior
-- Poetry
+- Python 3.11.5 ou superior
+- UV
 - Git
-- Postgres
 - Docker e Docker Compose
 
 ### 🔧 Instalação
@@ -174,34 +173,17 @@ Siga os passos abaixo para configurar o ambiente de desenvolvimento:
 1. Clonando o Repositório:
 
 ```bash
-git clone https://github.com/lspraciano/projectBiomedicIADemonstrationsBackend.git
+git clone https://github.com/lspraciano/biomedic-backend.git
 ```
 
 2. No diretório raiz do projeto, instale as dependências com o comando:
 
 ```bash
-cd projectBiomedicIADemonstrationsBackend
-poetry install --no-root
+cd biomedic-backend
+uv sync
 ```
 
-3. No diretório "configuration", crie um arquivo chamado ".secrets.toml" com as
-   variáveis de ambiente sensíveis necessárias. Veja o exemplo abaixo:
-
-```
-[production]
-DB_URL = "postgresql+asyncpg://USER_NAME:PASSWORD@HOST:PORT/PROD_DB_NAME" 
-
-[development]
-DB_URL = "postgresql+asyncpg://USER_NAME:PASSWORD@HOST:PORT/DEV_DB_NAME" 
-
-[testing]
-DB_URL = "postgresql+asyncpg://USER_NAME:PASSWORD@HOST:PORT/TEST_DB_NAME"
-```
-
-obs: Troque os valores de USER_NAME, PASSWORD, HOST,PORT e PROD_DB_NAME, por
-valores referentes aos bancos de dados que deseje.
-
-4. No mesmo diretório "configuration", você encontrará o arquivo "settings.toml"
+3. No diretório "configuration", você encontrará o arquivo "settings.toml"
    que contém configurações não sensíveis. Certifique-se de que este arquivo
    esteja configurado corretamente. Abaixo temo o significado das variáveis contidas
    nele.
@@ -217,40 +199,29 @@ SERVER_RELOAD = 0 -> Reinício automático da aplicação. 0 é Não, 1 é Sim.
 SAVE_PREDICTION = 0 -> Salvar predições no banco de dados. 0 é Não, 1 é Sim.
 ```
 
-5. Defina a variável de ambiente "BIOIADEMON_APP_RUNNING_MODE" para o modo
+5. Defina a variável de ambiente "BIOMEDICBACKEND_APP_RUNNING_MODE" para o modo
    de execução desejado. Por exemplo:
 
 No Windows:
 
 ```bash
-setx BIOIADEMON_APP_RUNNING_MODE "development"
+setx BIOMEDICBACKEND_APP_RUNNING_MODE "development"
 ```
 
 No Linux:
 
 ```bash
-export BIOIADEMON_APP_RUNNING_MODE=development
+export BIOMEDICBACKEND_APP_RUNNING_MODE=development
 ```
 
 Observação: Pode ser necessário reiniciar o terminal para que a variável
 de ambiente seja reconhecida.
 
-6. Ative o ambiente virtual com o comando:
-
-```bash
-poetry shell
-```
-
-7. Atualize o banco de dados para a versão mais recente usando o comando:
-
-```bash
-alembic upgrade head
-```
 
 8. Inicie a aplicação com o comando:
 
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 9. Você pode acessar a documentação das rotas da API usando o seguinte endereço:
@@ -262,13 +233,6 @@ http://127.0.0.1:8000/api/v1/docs
 ou
 clique [aqui](http://127.0.0.1:8000/api/v1/docs) para abrir o endereço diretamente no navegador
 
-## 🔥 Testes
-
-Para executar os testes, utilize um dos seguintes comandos:
-
-```bash
-python -m run_tests
-```
 
 ## ⚡ Rodando em Container
 

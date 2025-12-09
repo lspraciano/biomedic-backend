@@ -21,4 +21,4 @@ def get_project_metadata() -> Dict:
 
     ) as f:
         all_data: Dict = toml.load(f)
-        return all_data["tool"]["poetry"]
+        return all_data["project"]

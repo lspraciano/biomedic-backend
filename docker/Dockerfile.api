@@ -1,22 +1,27 @@
-FROM python:3.11.2 as python-base
+FROM python:3.11.5-slim as python-base
 
-RUN mkdir -p /api/ia_hem_scan
-WORKDIR /api/ia_hem_scan
+# Instalar uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-RUN apt update && apt install -y libsm6 libxext6 ffmpeg libfontconfig1 libxrender1 libgl1-mesa-glx
+RUN mkdir -p /api/biomedic-backend
+WORKDIR /api/biomedic-backend
 
-RUN pip install --upgrade pip
-RUN pip install poetry
+# Instalar dependências do sistema
+RUN apt update && apt install -y \
+    libsm6 \
+    libxext6 \
+    ffmpeg \
+    libfontconfig1 \
+    libxrender1 \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY ../pyproject.toml /api/ia_hem_scan
-COPY ../poetry.lock /api/ia_hem_scan
-COPY ../alembic.ini /api/ia_hem_scan
-COPY ../run_tests.py /api/ia_hem_scan
+# Copiar arquivos de configuração primeiro (melhor cache)
+COPY pyproject.toml uv.lock* ./
 
-COPY ../app /api/ia_hem_scan/app
-COPY ../configuration /api/ia_hem_scan/configuration
-COPY ../migrations /api/ia_hem_scan/migrations
-COPY ../tests /api/ia_hem_scan/tests
+# Instalar dependências Python com uv
+RUN uv sync
 
-RUN poetry config virtualenvs.create false
-RUN poetry install --no-root
+# Copiar o resto do código
+COPY app ./app
+COPY configuration ./configuration

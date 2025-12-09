@@ -12,7 +12,6 @@ class RootResponse(BaseModel):
     * **version:** The version of the API.
     * **description:** A description of the API.
     * **authors:** A list of the authors of the API.
-    * **documentation:** A link to the API documentation.
     """
 
     status: str
@@ -20,7 +19,6 @@ class RootResponse(BaseModel):
     version: str
     description: str
     authors: list
-    documentation: str
 
     class Config:
         from_attributes = True

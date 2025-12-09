@@ -12,7 +12,7 @@ root: str = os.path.abspath(
 
 settings: Dynaconf = Dynaconf(
     root_path=root,
-    envvar_prefix="BIOIADEMON",
+    envvar_prefix="BIOMEDICBACKEND",
     settings_files=[
         "./configuration/settings.toml",
         "./configuration/.secrets.toml",
@@ -22,7 +22,7 @@ settings: Dynaconf = Dynaconf(
         "development",
         "testing"
     ],
-    env_switcher="BIOIADEMON_APP_RUNNING_MODE",
+    env_switcher="BIOMEDICBACKEND_APP_RUNNING_MODE",
     validators=[
         Validator(
             names="APP_RUNNING_MODE",

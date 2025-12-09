@@ -6,8 +6,7 @@ SERVER_RELOAD = 1
 SAVE_PREDICTION = 0
 
 [production]
-PROXY_ROOT_PATH = "/biomedic-ia-demonstration-backend"
-API_URL_BASE = "https://lucaspraciano.com/biomedic-ia-demonstration-backend"
+API_URL_BASE = "https://biomedic-backend.lucaspraciano.com"
 SERVER_RELOAD = 0
 
 [development]
